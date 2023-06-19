@@ -104,9 +104,6 @@
 
 Проект CarConnectContracts: содержит папки BindingModels, ViewModels, StrorageContracts, BusinessLogicsContracts
 ![image](https://github.com/BulatReznik/CarConnect-Pet-Project/assets/90419704/4d485ebd-4d7d-4229-98d2-3c534b314550)
- 
-Проект CarConnectContracts
-![image](https://github.com/BulatReznik/CarConnect-Pet-project/assets/90419704/be6283cd-32e4-442a-9d8a-dd724d89e310)
 
 Папка StorageContrcats: содержит интерфейсы связанные с запросами к базе данных
 ![image](https://github.com/BulatReznik/CarConnect-Pet-Project/assets/90419704/b9b9066f-83ba-4182-9fda-872d53876b41)
