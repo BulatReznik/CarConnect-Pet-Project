@@ -1,0 +1,182 @@
+﻿@{
+    ViewData["Title"] = "Обновление данных об автомобиле";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/index.css" asp-append-version="true" />
+
+    <style>
+        body {
+            background: -webkit-gradient(linear, left bottom, right top, from(#fc2c77), to(#6c4079));
+            background: -webkit-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
+            background: -moz-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
+            background: -o-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
+            background: linear-gradient(to top right, #fc2c77 0%, #6c4079 100%);
+        }
+
+        .buttons-frame {
+            display: flex;
+            flex-direction: row;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper p-t-50 p-b-100 lr-10 font-robo">
+        <div class="wrapper wrapper--w680">
+            <div class="card card-4">
+                <div class="card-body">
+                    <h2 class="title text-center">Обновить информацию об автомобиле</h2>
+                    <form method="post" enctype="multipart/form-data">
+                        <div class="form-group required">
+                            <div class="form-group mt-3">
+                                <label for="Brand">Марка автомобиля:</label>
+                                <input type="text" class="form-control" name="Brand" id="Brand" value="@ViewBag.Car.Brand" required="required">
+                            </div>
+
+                            <div class="form-group mt-3">
+                                <label for="Model">Модель автомобиля:</label>
+                                <input type="text" class="form-control" name="Model" id="Model" value="@ViewBag.Car.Model">
+                            </div>
+
+                            <div class="form-group mt-3">
+                                <label for="Year">Дата выпуска автомобиля:</label>
+                                <input type="number" class="form-control" name="Year" id="Year" min="1900" max="@DateTime.Now.Year" value="@ViewBag.Car.Year.Year" required="required">
+                            </div>
+
+                            <div class="form-group mt-3">
+                                <label for="VIN">VIN номер автомобиля:</label>
+                                <input type="text" class="form-control" name="VIN" id="VIN" value="@ViewBag.Car.VIN" pattern=".{,17}" required="required">
+                            </div>
+
+                            <div class="form-group mt-3">
+                                <label for="LicensePlate">Номерной знак автомобиля:</label>
+                                <input type="text" class="form-control" name="LicensePlate" id="LicensePlate" value="@ViewBag.Car.LicensePlate" required="required">
+                            </div>
+
+                            <div class="form-group mt-3">
+                                <label for="Colour">Цвет автомобиля:</label>
+                                <input type="text" class="form-control" name="Colour" id="Colour" value="@ViewBag.Car.Colour" required="required">
+                            </div>
+
+
+                            <div class="form-group mt-3">
+                                <label for="uploadedFile">Фото автомобиля:</label>
+                                <input type="file" class="form-control" name="uploadedFile" id="uploadedFile">
+                            </div>
+
+                            <div class="form-group mt-3">
+                                <img id="preview" src="@ViewBag.Car.Path" alt="Фото автомобиля" width="400" required="required">
+                            </div>
+
+                            <div class="form-group mt-3">
+                                <img id="preview" style="max-width: 400px; max-height: 400px; margin-top: 10px;" />
+                            </div>
+
+                            <div class="mt-3 d-flex flex-wrap">
+                                <div class="buttons-frame">
+                                    <input type="submit" value="Изменить" class="btn btn-success me-2">
+                                    <a class="btn btn-primary text-nowrap" asp-action="Index">Отмена</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Подключение скриптов Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#preview').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#uploadedFile").change(function () {
+            readURL(this);
+        });
+    </script>
+
+    <script>
+        function validateForm() {
+            // Проверка поля "Марка автомобиля"
+            var brandInput = document.getElementById('Brand');
+            var brand = brandInput.value.trim();
+            if (brand === '') {
+                alert("Пожалуйста, введите марку автомобиля.");
+                brandInput.focus();
+                return false;
+            }
+
+            // Проверка поля "Модель автомобиля"
+            var modelInput = document.getElementById('Model');
+            var model = modelInput.value.trim();
+            if (model === '') {
+                alert("Пожалуйста, введите модель автомобиля.");
+                modelInput.focus();
+                return false;
+            }
+
+            // Проверка поля "Дата выпуска автомобиля"
+            var yearInput = document.getElementById('Year');
+            var year = parseInt(yearInput.value);
+            if (isNaN(year) || year < 1900 || year > new Date().getFullYear()) {
+                alert("Пожалуйста, введите корректную дату выпуска автомобиля.");
+                yearInput.focus();
+                return false;
+            }
+
+            // Проверка поля "VIN номер автомобиля"
+            var vinInput = document.getElementById('VIN');
+            var vin = vinInput.value.trim();
+            if (vin === '') {
+                alert("Пожалуйста, введите VIN номер автомобиля.");
+                vinInput.focus();
+                return false;
+            }
+
+            var licensePlateInput = document.getElementById('LicensePlate');
+            var licensePlate = licensePlateInput.value.trim();
+            if (licensePlate === '') {
+                alert("Пожалуйста, введите номерной знак автомобиля.");
+                licensePlateInput.focus();
+                return false;
+            }
+            if (licensePlate.length < 8 || licensePlate.length > 9) {
+                alert("Номер должен содержать от 8 до 9 символов и иметь формат A007AA77 или A007AA777");
+                licensePlateInput.focus();
+                return false;
+            }
+
+            // Проверка поля "Цвет автомобиля"
+            var colourInput = document.getElementById('Colour');
+            var colour = colourInput.value.trim();
+            if (colour === '') {
+                alert("Пожалуйста, введите цвет автомобиля.");
+                colourInput.focus();
+                return false;
+            }
+
+            // Проверка типа файла и размера
+            var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+            if (!allowedExtensions.exec(file.name)) {
+                alert("Недопустимый тип файла. Разрешены только изображения формата JPG, JPEG, PNG или GIF.");
+                fileInput.value = '';
+                return false;
+            }
+            // Все проверки пройдены, форма валидна
+            return true;
+        }
+    </script>
+</body>
+
+

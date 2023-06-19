@@ -1,0 +1,37 @@
+﻿@using CarConnectContracts.ViewModels
+
+@{
+    ViewData["Title"] = "Главная";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/index.css">
+    <style>
+        body {
+            background: -webkit-gradient(linear, left bottom, right top, from(#fc2c77), to(#6c4079));
+            background: -webkit-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
+            background: -moz-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
+            background: -o-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
+            background: linear-gradient(to top right, #fc2c77 0%, #6c4079 100%);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page-wrapper p-t-50 p-b-150 font-robo">
+        <div class="wrapper wrapper--w960">
+            <div class="card card-1">
+                <div class="card-body">
+                    <div class="photo-grid">
+                        @for (int i = 1; i <= 25; i++)
+                        {
+                            <div class="photo-tile">
+                                <img src="@Url.Content("~/images/url" + i + ".jpg")" alt="Photo @(i)" />
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

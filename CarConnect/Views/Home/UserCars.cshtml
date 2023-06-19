@@ -1,0 +1,68 @@
+﻿@using CarConnectContracts.ViewModels
+
+@model List<CarViewModel>
+
+@{
+    ViewData["Title"] = "Мои автомобили";
+}
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+    <style>
+        body {
+            background: -webkit-gradient(linear, left bottom, right top, from(#fc2c77), to(#6c4079));
+            background: -webkit-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
+            background: -moz-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
+            background: -o-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
+            background: linear-gradient(to top right, #fc2c77 0%, #6c4079 100%);
+        }
+
+        .text-center {
+            margin-top: 20px;
+        }
+
+
+    </style>
+</head>
+
+<body>
+    <div class="text-center">
+        <div class="d-flex justify-content-center mb-3">
+        </div>
+
+        <div class="btn-group flex-wrap">
+            <a class="btn btn-success mb-3" asp-action="CarCreate">
+                <i class="fas fa-car"></i> Добавить авто
+            </a>
+            <a class="btn btn-success mx-2 mb-3" asp-action="Privacy">
+                <i class="fas fa-user-circle"></i> Профиль
+            </a>
+        </div>
+
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-4">
+                    <div class="card rounded-2 mb-3" style="min-height: 600px;">
+                        <img src="@item.Path" class="card-img-top" height="280">
+
+                        <div class="card-body">
+                            <div style="margin-bottom: 25px">
+                            <img src="~/Files/license_plate_@(item.LicensePlate).png">
+                            </div>
+                            <p class="card-text">Модель: @Html.DisplayFor(modelItem => item.Model)</p>
+                            <p class="card-text">Год: @Html.DisplayFor(modelItem => item.Year.Year)</p>
+                            <p class="card-text">Цвет: @Html.DisplayFor(modelItem => item.Colour)</p>
+                            <p class="card-text">VIN-номер: @Html.DisplayFor(modelItem => item.VIN)</p>
+                        </div>
+                        <div style="margin-top: auto; margin-bottom: 10px;" class="flex-wrap">
+                            <a class="btn btn-primary btn-sm mb-2 text-nowrap" style="min-width: 190px" href="@Url.Action("CarUpdate", new { carId = item.Id, carBrand = item.Brand, carModel = item.Model })">Изменить</a>
+                            <a class="btn btn-danger btn-sm mb-2 text-nowrap" style="min-width: 190px" href="@Url.Action("CarDelete", new { carId = item.Id })">Удалить</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</body>

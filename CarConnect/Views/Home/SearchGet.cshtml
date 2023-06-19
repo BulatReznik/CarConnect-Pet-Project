@@ -1,0 +1,97 @@
+﻿@using CarConnectContracts.ViewModels
+
+@model List<CarViewModel>
+
+@{
+    ViewData["Title"] = "Поиск по номеру";
+}
+
+<head>
+    <style>
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+
+        body {
+            background: -webkit-gradient(linear, left bottom, right top, from(#fc2c77), to(#6c4079));
+            background: -webkit-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
+            background: -moz-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
+            background: -o-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
+            background: linear-gradient(to top right, #fc2c77 0%, #6c4079 100%);
+        }
+
+        .buttons-frame {
+            display: flex;
+            flex-direction: row;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper p-t-130 p-b-100 font-robo">
+        <div class="wrapper wrapper--w680">
+            <div class="card card-4">
+                <div class="card-body">
+                    <h2 class="title text-center">Поиск авто</h2>
+                    <form method="post" onsubmit="return validateForm()">
+                        <div class="form-group">
+                            <label for="LicensePlate">Для поиска оставьте только один номер:</label>
+                            <input type="text" class="form-control" id="LicensePlate" name="LicensePlate" required="required" lang="en" maxlength="9" value="@ViewData["EditValue"]">
+                            @if (ViewData.ModelState["LicensePlate"] != null && ViewData.ModelState["LicensePlate"].Errors.Count > 0)
+                            {
+                                <div class="text-danger">
+                                    @ViewData.ModelState["LicensePlate"].Errors[0].ErrorMessage
+                                </div>
+                            }
+                        </div>
+
+                        <div class="mt-3 d-grid justify-content-center flex-wrap align-items-stretch">
+                            <div class="buttons-frame">
+                                <input type="submit" value="Поиск" class="btn btn-sm btn-success me-2 mb-2 text-nowrap">
+                                <a class="btn btn-sm btn-primary text-nowrap mb-2" asp-action="Cars">Отмена</a>
+                            </div>
+                        </div>
+
+
+                    </form>
+
+                    <script>
+                        function validateForm() {
+                            var licensePlate = document.getElementById("LicensePlate").value;
+                            var regex = /^{8,9}$/;
+                            if (!regex.test(licensePlate)) {
+                                alert("Номер должен состоять из 8-9 символов на английском языке");
+                                return false;
+                            }
+                            return true;
+                        }
+                    </script>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Подключение скриптов Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#preview').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#uploadedFile").change(function () {
+            readURL(this);
+        });
+    </script>
+</body>
+
